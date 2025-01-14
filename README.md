@@ -8,3 +8,5 @@ Built as part of the University of Helsinki's [Full Stack Open course](https://f
 - Express.js
 - React
 - Node.js
+
+Deployed with [Render](https://render.com/)
