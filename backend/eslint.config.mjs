@@ -30,8 +30,8 @@ export default [
         'single'
       ],
       '@stylistic/js/semi': [
-        'error',
-        'never'
+        2,
+        'always'
       ],
       'eqeqeq': 'error',
       'no-trailing-spaces': 'error',
