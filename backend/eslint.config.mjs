@@ -31,7 +31,7 @@ export default [
       ],
       '@stylistic/js/semi': [
         2,
-        'always'
+        'never'
       ],
       'eqeqeq': 'error',
       'no-trailing-spaces': 'error',
