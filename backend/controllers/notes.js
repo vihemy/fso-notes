@@ -6,9 +6,16 @@ notesRouter.get('/', async (request, response) => {
   response.json(notes)
 })
 
-notesRouter.delete('/:id', async (request, response) => {
-  await Note.findByIdAndDelete(request.params.id)
-  response.status(204).end()
+notesRouter.put('/:id', async (request, response) => {
+  const body = request.body
+
+  const note = {
+    content: body.content,
+    important: body.important,
+  }
+
+  const updatedNote = await Note.findByIdAndUpdate(request.params.id, note, { new: true })
+  response.json(updatedNote)
 })
 
 notesRouter.post('/', async (request, response) => {
@@ -32,19 +39,9 @@ notesRouter.get('/:id', async (request, response) => {
   }
 })
 
-notesRouter.put('/:id', (request, response, next) => {
-  const body = request.body
-
-  const note = {
-    content: body.content,
-    important: body.important,
-  }
-
-  Note.findByIdAndUpdate(request.params.id, note, { new: true })
-    .then(updatedNote => {
-      response.json(updatedNote)
-    })
-    .catch(error => next(error))
+notesRouter.delete('/:id', async (request, response) => {
+  await Note.findByIdAndDelete(request.params.id)
+  response.status(204).end()
 })
 
 module.exports = notesRouter
