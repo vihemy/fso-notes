@@ -63,3 +63,6 @@ describe('when there is initially one user in db', () => {
   })
 })
 
+after(async () => {
+  await mongoose.connection.close()
+})
