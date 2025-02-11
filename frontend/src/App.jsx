@@ -31,6 +31,8 @@ const App = () => {
   const [newNote, setNewNote] = useState("");
   const [showAll, setShowAll] = useState(true);
   const [errorMessage, setErrorMesage] = useState(null);
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
   useEffect(() => {
     noteService.getAll().then((initialNotes) => {
@@ -54,7 +56,7 @@ const App = () => {
       .then((returnedNote) => {
         setNotes(notes.map((note) => (note.id === id ? returnedNote : note)));
       })
-      .catch((error) => {
+      .catch(() => {
         setErrorMesage(
           `Note "${note.content}" was already removed from server`
         );
@@ -83,10 +85,38 @@ const App = () => {
     setNewNote(event.target.value);
   };
 
+  const handleLogin = (event) => {
+    event.preventDefault()
+    console.log('logging in with', username, password)
+  }
+
   return (
     <div>
       <h1>Notes</h1>
       <Notification message={errorMessage} />
+      <h2>Login </h2>
+      <form onSubmit={handleLogin}>
+        <div>
+          username
+            <input
+            type="text"
+            value={username}
+            name="Username"
+            onChange={({ target }) => setUsername(target.value)}
+          />
+        </div>
+        <div>
+          password
+            <input
+            type="password"
+            value={password}
+            name="Password"
+            onChange={({ target }) => setPassword(target.value)}
+          />
+        </div>
+        <button type="submit">login</button>
+      </form>
+
       <div>
         <button onClick={() => setShowAll(!showAll)}>
           show {showAll ? "important" : "all"}
