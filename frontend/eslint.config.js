@@ -28,6 +28,7 @@ export default [
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
       ...reactHooks.configs.recommended.rules,
+      'react/prop-types': 'off', // TEMP FIX https://stackoverflow.com/questions/38684925/react-eslint-error-missing-in-props-validation
       'react/jsx-no-target-blank': 'off',
       'react-refresh/only-export-components': [
         'warn',
