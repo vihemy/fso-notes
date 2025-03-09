@@ -1,5 +1,4 @@
-const { test, describe, expect } = require('@playwright/test')
-const { beforeEach } = require('node:test')
+const { test, describe, expect, beforeEach } = require('@playwright/test')
 
 
 describe('Note app', () => {
