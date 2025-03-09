@@ -1,4 +1,5 @@
 const { test, describe, expect, beforeEach } = require('@playwright/test')
+const { loginWith, createNote } = require('./helper')
 
 describe('Note app', () => {
   beforeEach(async ({ page, request }) => {
@@ -30,10 +31,7 @@ describe('Note app', () => {
   })
 
   test('login fails with wrong password', async ({ page }) => {
-    await page.getByRole('button', { name: 'log in' }).click()
-    await page.getByTestId('username').fill('mluukkai')
-    await page.getByTestId('password').fill('wrong')
-    await page.getByRole('button', { name: 'login' }).click()
+    await loginWith(page, 'mluukkai', 'wrongPassword')
     
     const errorDiv = await page.locator('.error')
     await expect(errorDiv).toContainText('wrong credentials')
@@ -45,24 +43,17 @@ describe('Note app', () => {
 
   describe('when logged in', () => {
     beforeEach(async ({ page }) => {
-      await page.getByRole('button', { name: 'log in' }).click()
-      await page.getByTestId('username').fill('mluukkai')
-      await page.getByTestId('password').fill('salainen')
-      await page.getByRole('button', { name: 'login' }).click()
+      await loginWith(page, 'mluukkai', 'salainen')
     })
 
     test('a new note can be created', async ({ page }) => {
-      await page.getByRole('button', { name: 'new note' }).click()
-      await page.getByRole('textbox').fill('a note created by playwright')
-      await page.getByRole('button', { name: 'save' }).click()
+      await createNote(page, 'a note created by playwright')
       await expect(await page.getByText('a note created by playwright')).toBeVisible()
     })
 
     describe('and a note exists', () => {
       beforeEach(async ({ page }) => {
-        await page.getByRole('button', { name: 'new note' }).click()
-        await page.getByRole('textbox').fill('another note by playwright')
-        await page.getByRole('button', { name: 'save' }).click()
+        await createNote(page, 'another note by playwright')
       })
   
       test('importance can be changed', async ({ page }) => {
