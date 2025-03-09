@@ -3,8 +3,8 @@ const { loginWith, createNote } = require('./helper')
 
 describe('Note app', () => {
   beforeEach(async ({ page, request }) => {
-    await request.post('http:localhost:3001/api/testing/reset')
-    await request.post('http://localhost:3001/api/users', {
+    await request.post('/api/testing/reset')
+    await request.post('/api/users', {
       data: {
         name: 'Matti Luukkainen',
         username: 'mluukkai',
@@ -12,7 +12,7 @@ describe('Note app', () => {
       }
     })
 
-    await page.goto('http://localhost:5173')
+    await page.goto('/')
   })
 
   test('front page can be opened', async ({ page }) => {
@@ -26,7 +26,6 @@ describe('Note app', () => {
     await page.getByTestId('username').fill('mluukkai')
     await page.getByTestId('password').fill('salainen')
     await page.getByRole('button', { name: 'login' }).click()
-  
     await expect(page.getByText('Matti Luukkainen logged in')).toBeVisible()
   })
 
@@ -37,7 +36,6 @@ describe('Note app', () => {
     await expect(errorDiv).toContainText('wrong credentials')
     await expect(errorDiv).toHaveCSS('border-style', 'solid')
     await expect(errorDiv).toHaveCSS('color', 'rgb(255, 0, 0)')
-
     await expect(page.getByText('Matti Luukkainen logged in')).not.toBeVisible()
   })
 
